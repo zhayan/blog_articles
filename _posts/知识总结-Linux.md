@@ -196,3 +196,109 @@ awk ' BEGIN{ statements } statements2 END{ statements } '
 ###  其他
 查看文件类型: file filename
 以ASCII字符显示文件: od -c filename
+
+## 系统状态
+
+### 磁盘文件
++ df -h 查看磁盘空间利用 -h: human缩写，以易读的方式显示结果
++ du -sh -h 人性化显示 `-s` 递归整个目录的大小
+
+### 打包压缩
+打包是将多个文件归并到一个文件: tar -cvf etc.tar /etc <==仅打包，不压缩！
++ -c :打包选项
++ -v :显示打包进度
++ -f :使用档案文件
++ 解包: tar -xvf demo.tar, -x 解包选项
+
+tar解压参数说明：
++ -z 解压gz文件
++ -j 解压bz2文件
++ -J 解压xz文件
+
+压缩: gzip demo.txt,生成 demo.txt.gz
+解压缩：gunzip demo.tar.gz, 生成demo.tar
+同理bz2等
+
+### CPU监控
++ 查看CPU使用率：sar -u 1 2，每1秒采样一次，总共采样2次；
++ 查看CPU平均负载：sar -q 1 2
+
+### 内存监控
++ 内存使用状况：sar -r 1 2
++ 查看内存使用量：free -m
++ 查看页面交换发生状况 页面发生交换时，服务器的吞吐量会大幅下降；服务器状况不良时，如果怀疑因为内存不足而导致了页面交换的发生，可以使用sar -W这个命令来确认是否发生了大量的交换
++ 当系统中sar不可用时，可以使用以下工具替代：linux下有 vmstat、Unix系统有prstat
+    - 查看cpu、内存、使用情况： vmstat n m （n 为监控频率、m为监控次数）
+    - 使用watch 工具监控变化 当需要持续的监控应用的某个数据变化时，watch工具能满足要求；
+
+## 进程管理
+
+### 进程查询
++ 查询正在运行的进程信息 ps -ef
++ 查询归属于用户colin115的进程 ps -ef | grep colin115 或 ps -lu colin115
++ 查询进程ID（适合只记得部分进程字段） pgrep 查找进程 eg:查询进程名中含有re的进程 pgrep -l re
++ 以完整的格式显示所有的进程 ps -ajx
++ 显示进程信息，并实时更新: top，输入字符命令后显示相应的进程状态
+    - P：根据CPU使用百分比大小进行排序。
+    - M：根据驻留内存大小进行排序。
+    - i：使top不显示任何闲置或者僵死进程。
++ lsof命令查看文件使用：
+    - 查看端口占用的进程状态：lsof -i:3306
+    - 查看用户username的进程所打开的文件:lsof -u username
+    - 查询init进程当前打开的文件:lsof -c init
+    - 查询指定的进程ID(23295)打开的文件：lsof -p 23295
+    - 查询指定目录下被进程开启的文件（使用+D 递归目录）：lsof +d mydir1/
++ lsof（list open files）是一个列出当前系统打开文件的工具。在linux环境下，任何事物都以文件的形式存在，通过文件不仅仅可以访问常规数据，还可以访问网络连接和硬件。
++ 查询7902端口现在运行什么程序:
+    - 第一步，查询使用该端口的进程的PID；lsof -i:7902
+    - 使用ps工具查询进程详情：ps -fe | grep 30294
++ 使用命令pmap，来输出进程内存的状况，可以用来分析线程堆栈。
+
+### 终止进程
++ 杀死指定PID的进程 (PID为Process ID)：kill PID
++ 杀死相关进程：kill -9 3434
++ 杀死job工作 (job为job number)：kill %job(job可以理解为shell的命令)
+
+```bash
+#将用户colin115下的所有进程名以av_开头的进程终止:
+ps -u colin115 |  awk '/av_/ {print "kill -9 " $1}' | sh
+#将用户colin115下所有进程名中包含HOST的进程终止:
+ps -fe| grep colin115|grep HOST |awk '{print $2}' | xargs kill -9;
+```
+
+## 网络相关
+
+### 查询网络服务和端口
++ 列出所有端口 (包括监听和未监听的): netstat -a
++ 列出所有 tcp 端口: netstat -at
++ 列出所有有监听的服务状态: netstat -l
+
+### 网络路由
++ 查看路由状态: route -n
++ 发送ping包到地址IP: ping IP
++ 探测前往地址IP的路由路径: traceroute IP
++ DNS查询，寻找域名domain对应的IP: host domain
++ 反向DNS查询: host IP
+
+### 镜像下载
+直接下载文件或者网页:
+wget url
+常用选项:
++ `–limit-rate` :下载限速
++ `-o`：指定日志文件；输出都写入日志；
++ `-c`：断点续传
+
+## 用户管理
+
+## 系统
+
+### 版本、时间、硬件
+
+### IPC资源（Inter-Process Communication）
++ 查看系统使用的IPC共享内存资源: ipcs -m
++ 查看系统使用的IPC队列资源: ipcs -q
++ 查看系统使用的IPC信号量资源: ipcs -s
++ 应用示例：查看IPC资源被谁占用有个IPCKEY：51036 ，需要查询其是否被占用；
+    - 首先通过计算器将其转为十六进制:51036 -> c75c
+    - 如果知道是被共享内存占用: ipcs -m | grep c75c
+    - 如果不确定，则直接查找: ipcs | grep c75c
