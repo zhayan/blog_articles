@@ -1,0 +1,6 @@
+https://www.cnblogs.com/skynet/archive/2011/02/20/1959162.html
+
+定位内存泄露
+(1)在windows平台下通过CRT中的库函数进行检测；
+(2)在可能泄漏的调用前后生成块的快照，比较前后的状态，定位泄漏的位置
+(3)Linux下通过工具valgrind检测
