@@ -1,15 +1,16 @@
 ---
-title: 【每日一题_基础】TCP三次握手、四次挥手
+title: 【基础】TCP三次握手、四次挥手
 date: 2021-03-13 21:42:52
 toc: true
 tags:
 - 面试 
 - 计算机网络
 categories:
-- 每日一题_基础
+- 基础
 ---
 
 传输控制协议（英語：Transmission Control Protocol，縮寫：TCP）是一种面向连接的、可靠的、基于字节流的传输层通信协议，
+参考：https://blog.csdn.net/qzcsu/article/details/72861891
 <!-- more -->
 
 ## 三次握手
@@ -43,4 +44,4 @@ MSL（Maximum Segment Lifetime），TCP允许不同的实现可以设置不同�
 TCP还设有一个保活计时器，显然，客户端如果出现故障，服务器不能一直等下去，白白浪费资源。服务器每收到一次客户端的请求后都会重新复位这个计时器，时间通常是设置为2小时，若两小时还没有收到客户端的任何数据，服务器就会发送一个探测报文段，以后每隔75秒发送一次。若一连发送10个探测报文仍然没反应，服务器就认为客户端出了故障，接着就关闭连接。
 
 
-原文链接：https://blog.csdn.net/qzcsu/article/details/72861891
+

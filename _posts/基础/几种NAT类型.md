@@ -1,13 +1,14 @@
 ---
-title: 【每日一题_基础】几种NAT类型
+title: 【基础】几种NAT类型
 date: 2021-03-11 21:42:52
 toc: true
 tags:
 - 面试 
 - 计算机网络
 categories:
-- 每日一题_基础
+- 基础
 ---
+参考<https://blog.csdn.net/mycloudpeak/article/details/53550405>
 
 NAT（Network Address Translation，网络地址转换）是1994年提出的。当在专用网内部的一些主机本来已经分配到了本地IP地址（即仅在本专用网内使用的专用地址），但现在又想和因特网上的主机通信（并不需要加密）时，可使用NAT方法。
 
@@ -43,4 +44,3 @@ client`192.168.0.2, 100`和server`1.1.1.1:1111`在通信后，映射到网关`8.
 
 
 
-参考<https://blog.csdn.net/mycloudpeak/article/details/53550405>

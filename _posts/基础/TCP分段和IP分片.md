@@ -1,12 +1,12 @@
 ---
-title: 【每日一题_基础】TCP分段和IP分片
+title: 【基础】TCP分段和IP分片
 date: 2021-03-17 20:52:55
 toc: true
 tags:
 - 面试 
 - 计算机网络
 categories:
-- 每日一题_基础
+- 基础
 ---
 TCP报文段如果很长的话，会在发送时发生分段(Segmentation)，在接收时进行重组，同样IP数据报在长度超过一定值时也会发生分片(Fragmentation)，在接收端再将分片重组。
 https://cloud.tencent.com/developer/article/1173790
