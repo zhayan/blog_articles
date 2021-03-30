@@ -1,5 +1,15 @@
-const知道吗？解释其作用。
-答：
+---
+title: 【C++】const关键字
+date: 2020-12-22 21:08:07
+toc: true
+tags:
+- C++
+categories:
+- C++
+---
+参考：https://www.runoob.com/w3cnote/cpp-const-keyword.html
+const 是 constant 的缩写，本意是不变的，不易改变的意思。在 C++ 中是用来修饰内置类型变量，自定义对象，成员函数，返回值，函数参数。
+<!-- more -->
 
 1.const 修饰类的成员变量，表示成员常量，不能被修改。
 
