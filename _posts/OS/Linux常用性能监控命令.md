@@ -1,12 +1,11 @@
 ---
-title: 【每日一题_OS】Linux常用性能监控命令
+title: 【OS】Linux常用性能监控命令
 date: 2021-03-10 10:17:48
 toc: true
 tags:
-- 面试 
 - 操作系统
 categories:
-- 每日一题_OS
+- OS
 ---
 Linux常用性能监控命令有哪些
 
